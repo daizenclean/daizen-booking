@@ -2,6 +2,7 @@
  * DAIZEN Web予約 受付スクリプト（Google Apps Script）
  * - 予約フォームの内容をスプレッドシートに1行ずつ保存
  * - お客様に確認メール、DAIZENに通知メールを送信
+ * - Google口コミの評価・件数を毎日自動で取得（ファイル後半）
  * 設定手順は README.md を参照してください。
  */
 const NOTIFY_TO = "daizen.clean@gmail.com";   // 予約通知を受け取るアドレス
@@ -75,4 +76,70 @@ function getSheet_() {
     sh.getRange(1, 1, 1, COLUMNS.length).setFontWeight("bold").setBackground("#0d1a26").setFontColor("#ffffff");
   }
   return sh;
+}
+
+/* ============================================================
+ * Google口コミ（評価・件数）の自動更新
+ * - updateReviews：Google Places API から最新の評価と件数を取得して保存
+ * - setupDailyTrigger：updateReviews を毎朝6時台に自動実行する設定（最初に1回だけ実行）
+ * - doGet(?reviews=1)：サイトが保存済みの数字を読みに来る窓口
+ * APIキーは「プロジェクトの設定 → スクリプト プロパティ」に
+ *   PLACES_API_KEY = （Google Cloud で作成したキー）
+ * として保存してください（コードには書かないこと）。
+ * ============================================================ */
+const PLACE_QUERY = "ハウスクリーニングDAIZEN 東京都港区白金台5-22-11";
+
+function updateReviews() {
+  const props = PropertiesService.getScriptProperties();
+  const key = props.getProperty("PLACES_API_KEY");
+  if (!key) throw new Error("スクリプト プロパティに PLACES_API_KEY を設定してください");
+
+  let placeId = props.getProperty("PLACE_ID");
+  let place;
+  if (placeId) {
+    place = placesFetch_("https://places.googleapis.com/v1/places/" + placeId, "get", key, "id,displayName,rating,userRatingCount");
+  } else {
+    // 初回だけ店名で検索して Place ID を覚える
+    const res = placesFetch_("https://places.googleapis.com/v1/places:searchText", "post", key,
+      "places.id,places.displayName,places.rating,places.userRatingCount",
+      { textQuery: PLACE_QUERY, languageCode: "ja" });
+    const list = res.places || [];
+    place = list.find(p => /DAIZEN|大善/i.test((p.displayName || {}).text || "")) || list[0];
+    if (!place) throw new Error("お店が見つかりませんでした：" + PLACE_QUERY);
+    props.setProperty("PLACE_ID", place.id);
+  }
+  if (!place.rating || !place.userRatingCount) throw new Error("評価・件数が取得できませんでした");
+
+  const data = { rating: place.rating, count: place.userRatingCount, name: (place.displayName || {}).text, updated: new Date().toISOString() };
+  props.setProperty("REVIEWS", JSON.stringify(data));
+  console.log("口コミを更新しました", data);
+  return data;
+}
+
+function placesFetch_(url, method, key, fieldMask, body) {
+  const res = UrlFetchApp.fetch(url, {
+    method: method,
+    contentType: "application/json",
+    headers: { "X-Goog-Api-Key": key, "X-Goog-FieldMask": fieldMask },
+    payload: body ? JSON.stringify(body) : undefined,
+    muteHttpExceptions: true,
+  });
+  if (res.getResponseCode() !== 200) throw new Error("Places API エラー " + res.getResponseCode() + "：" + res.getContentText());
+  return JSON.parse(res.getContentText());
+}
+
+function setupDailyTrigger() {
+  ScriptApp.getProjectTriggers()
+    .filter(t => t.getHandlerFunction() === "updateReviews")
+    .forEach(t => ScriptApp.deleteTrigger(t));
+  ScriptApp.newTrigger("updateReviews").timeBased().everyDays(1).atHour(6).create();
+  return updateReviews();   // 設定と同時に1回取得しておく
+}
+
+function doGet(e) {
+  if (e && e.parameter && e.parameter.reviews) {
+    const saved = PropertiesService.getScriptProperties().getProperty("REVIEWS") || "{}";
+    return ContentService.createTextOutput(saved).setMimeType(ContentService.MimeType.JSON);
+  }
+  return ContentService.createTextOutput("DAIZEN 予約受付は稼働中です").setMimeType(ContentService.MimeType.TEXT);
 }

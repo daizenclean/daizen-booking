@@ -11,6 +11,9 @@ const SITE = {
   hours: "8:00〜19:00（年中無休）",
   address: "東京都港区白金台5-22-11 ソフトタウン白金507",
   ekiten: "https://www.ekiten.jp/shop_42207623/reserve/",
+  // Google Apps Script のウェブアプリURL（README の手順で取得）。
+  // 予約フォームの送信先と、Google口コミ（評価・件数）の自動更新の両方に使います。
+  gasUrl: "",
   sns: {
     instagram: "https://www.instagram.com/daizen_seisou/",
     x: "https://twitter.com/DAIZEN_clean",
@@ -117,6 +120,24 @@ function hideExpired(){
   document.querySelectorAll("[data-until]").forEach(el => { if (today > el.dataset.until) el.remove(); });
 }
 
+// Google口コミの評価・件数を最新にする（data-review="rating" / "count" の要素）
+// 取得できない場合は HTML に書いてある数字のまま表示します。
+async function loadReviews(){
+  const els = document.querySelectorAll("[data-review]");
+  if (!els.length || !SITE.gasUrl) return;
+  try {
+    const res = await fetch(SITE.gasUrl + "?reviews=1");
+    const r = await res.json();
+    if (!r || !r.rating || !r.count) return;
+    els.forEach(el => {
+      const v = el.dataset.review === "rating" ? Number(r.rating).toFixed(1) : String(r.count);
+      el.textContent = el.dataset.review === "count" ? Number(r.count).toLocaleString() : v;
+      if (el.dataset.count) el.dataset.count = v;
+    });
+  } catch (e) { /* 通信できないときは既定の数字のまま */ }
+}
+
 renderChrome();
 hideExpired();
+loadReviews();
 setupReveal();

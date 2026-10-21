@@ -182,8 +182,8 @@ textarea{min-height:100px;resize:vertical}
 <script src="assets/site.js"></script>
 <script>
 // ============ 設定（ここを書き換えてください） ============
-// Google Apps Script のウェブアプリURL（README の手順で取得）。空のままだと送信されません。
-const GAS_URL = "";
+// 送信先（Google Apps Script）。空のままだと送信されません。
+const GAS_URL = SITE.gasUrl;   // URL は assets/site.js の SITE.gasUrl に設定
 
 // 10月キャンペーン：この日までエアコン壁掛けが7,000円（税込）
 const CAMPAIGN_UNTIL = "2026-10-31";

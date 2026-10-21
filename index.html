@@ -184,7 +184,7 @@
           <a class="btn btn-ghost" href="#services">サービスを見る</a>
         </div>
         <div class="trust">
-          <span>Google口コミ <b>★5.0</b>（97件）</span>
+          <span>Google口コミ <b>★<span data-review="rating">5.0</span></b>（<span data-review="count">97</span>件）</span>
           <span>清掃賠償責任保険 <b>1,000万円</b></span>
           <span>年中無休 8:00〜19:00</span>
         </div>
@@ -208,8 +208,8 @@
   <div class="container">
     <div class="stats">
       <div class="stat reveal"><div class="n" data-count="1984" data-plain="1">1984</div><div class="l">創業年</div></div>
-      <div class="stat reveal"><div class="n">★<span data-count="5.0" data-dec="1">5.0</span></div><div class="l">Google口コミ評価</div></div>
-      <div class="stat reveal"><div class="n"><span data-count="97">97</span><small>件</small></div><div class="l">Google口コミ数</div></div>
+      <div class="stat reveal"><div class="n">★<span data-count="5.0" data-dec="1" data-review="rating">5.0</span></div><div class="l">Google口コミ評価</div></div>
+      <div class="stat reveal"><div class="n"><span data-count="97" data-review="count">97</span><small>件</small></div><div class="l">Google口コミ数</div></div>
       <div class="stat reveal"><div class="n"><span data-count="1000">1,000</span><small>万円</small></div><div class="l">清掃賠償責任保険</div></div>
     </div>
   </div>
@@ -430,13 +430,18 @@ CarpetMovie.mount(document.querySelector(".carpet-movie"));
 
 // 数字のカウントアップ
 document.querySelectorAll("[data-count]").forEach(el => {
-  const end = Number(el.dataset.count), dec = Number(el.dataset.dec || 0);
+  const dec = Number(el.dataset.dec || 0);
   const fmt = v => dec ? v.toFixed(dec) : el.dataset.plain ? String(Math.round(v)) : Math.round(v).toLocaleString();
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
   const io = new IntersectionObserver(([e]) => {
     if (!e.isIntersecting) return; io.disconnect();
-    const from = end > 1900 ? end - 40 : 0, t0 = performance.now();
-    const step = now => { const p = Math.min(1, (now - t0) / 1400); el.textContent = fmt(from + (end - from) * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+    const start = Number(el.dataset.count), from = start > 1900 ? start - 40 : 0, t0 = performance.now();
+    const step = now => {
+      const end = Number(el.dataset.count);   // 途中で口コミ数が自動更新されても最新値で止まる
+      const p = Math.min(1, (now - t0) / 1400);
+      el.textContent = fmt(from + (end - from) * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    };
     requestAnimationFrame(step);
   });
   io.observe(el);
