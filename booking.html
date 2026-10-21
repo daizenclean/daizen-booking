@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Web予約｜DAIZEN ハウスクリーニング・エアコンクリーニング</title>
+<meta name="description" content="DAIZENのWeb予約フォーム。エアコン・水回り・カーペットなどのメニューを選ぶと、概算金額がその場で表示されます。24時間受付。">
+<link rel="icon" href="assets/img/sitelogo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+body{background:var(--mist)}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 120px;display:grid;grid-template-columns:1fr 340px;gap:28px;align-items:start}
+@media (max-width:920px){.wrap{grid-template-columns:1fr}}
+.head{grid-column:1/-1}
+.head h1{font-family:var(--serif);font-size:clamp(26px,4vw,36px);color:var(--ink);margin:0 0 6px}
+.head p{color:var(--sub);margin:0}
+.card{background:#fff;border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow)}
+.card h2{font-size:18px;margin:0 0 4px;color:var(--ink)}
+.card h2 .num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-size:14px;margin-right:8px;vertical-align:2px}
+.card .hint{color:var(--sub);font-size:13px;margin:0 0 14px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0 8px}
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 4px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--ink);font:700 14px var(--sans);cursor:pointer}
+.tab .ico{font-size:24px;line-height:1.1}
+.tab[aria-selected=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tab .cnt{position:absolute;top:-6px;right:-4px;min-width:22px;padding:0 6px;border-radius:999px;background:var(--gold);color:#fff;font-size:12px;line-height:22px}
+.tab .cnt:empty{display:none}
+@media (max-width:480px){.tabs{grid-template-columns:repeat(2,1fr)}}
+.panel[hidden]{display:none}
+.panel{animation:fade .3s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:none}
+.row.sub{padding-left:16px}
+.row .name{font-weight:700;font-size:15px}
+.row.sub .name{font-size:14px}
+.row .desc{font-size:12px;color:var(--sub)}
+.subhead{font-weight:700;margin:20px 0 0;color:var(--steel);font-size:14px;letter-spacing:.05em}
+.stepper{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.stepper button{width:38px;height:38px;border-radius:50%;border:2px solid var(--steel);background:#fff;color:var(--steel);font-size:20px;line-height:1;cursor:pointer}
+.stepper button:active{background:var(--mist)}
+.stepper output{min-width:26px;text-align:center;font-weight:800;font-size:18px}
+.areaq{display:flex;align-items:center;gap:6px;font-weight:700;flex-shrink:0}
+.areaq input{width:90px;padding:8px 10px;border:2px solid var(--steel);border-radius:10px;font-size:18px;text-align:right;font-family:inherit}
+.note{font-size:13px;color:var(--sub);margin:12px 0 0}
+label.f{display:block;font-weight:700;margin:18px 0 6px;font-size:14px}
+.req{background:var(--err);color:#fff;font-size:11px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:400}
+.opt{color:var(--sub);font-size:12px;font-weight:400;margin-left:6px}
+input[type=text],input[type=tel],input[type=email],input[type=date],select,textarea{width:100%;padding:12px;border:1.5px solid #cbd8e0;border-radius:10px;font-size:16px;background:#fff;color:var(--text);font-family:inherit}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--steel);box-shadow:0 0 0 3px rgba(61,95,117,.15)}
+textarea{min-height:100px;resize:vertical}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.choices label{display:flex;align-items:center;gap:8px;padding:11px 12px;border:1.5px solid #cbd8e0;border-radius:10px;cursor:pointer;font-size:15px}
+.choices label:has(input:checked){border-color:var(--steel);background:#f3f8fb}
+.choices input{accent-color:var(--steel);width:18px;height:18px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.pair{grid-template-columns:1fr}}
+/* 右側の見積り */
+.summary{position:sticky;top:88px}
+.summary .box{background:var(--ink);color:#fff;border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+.summary h3{margin:0 0 12px;font-size:15px;color:#b9c8d3;font-weight:600;letter-spacing:.05em}
+.summary ul{list-style:none;padding:0;margin:0 0 14px;font-size:13px;display:grid;gap:6px;max-height:260px;overflow:auto}
+.summary li{display:flex;justify-content:space-between;gap:10px;color:#dfe8ee}
+.summary li.empty{color:#8fa9ba}
+.summary .total{border-top:1px solid rgba(255,255,255,.15);padding-top:12px;display:flex;align-items:baseline;justify-content:space-between}
+.summary .amount{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;display:inline-block}
+.summary .amount.bump{animation:bump .45s ease}
+@keyframes bump{40%{transform:scale(1.08)}}
+.summary small{display:block;color:#8fa9ba;font-size:12px;margin-top:6px}
+.summary .warn{margin-top:10px;font-size:12px;color:#ffd58a}
+@media (max-width:920px){.summary{position:static;order:-1}}
+.submit{width:100%;padding:18px;margin-top:24px;border:none;border-radius:999px;background:var(--gold);color:#fff;font-size:18px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px rgba(217,164,65,.35);font-family:inherit}
+.submit:hover{background:var(--gold-d)}
+.submit:disabled{opacity:.6;cursor:wait}
+.msg{display:none;padding:16px;border-radius:12px;margin-top:16px;font-weight:700}
+.msg.ng{display:block;background:#fdecea;color:var(--err)}
+.done{text-align:center;padding:48px 24px}
+.done h2{font-family:var(--serif);font-size:28px}
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<form id="bookingForm" novalidate>
+<div class="wrap">
+  <div class="head">
+    <h1>Web予約・お見積り</h1>
+    <p>メニューを選ぶと概算金額がすぐに表示されます。送信後に確認メールが届き、作業日は担当者からのご連絡で確定します（24時間受付）。</p>
+  </div>
+
+  <div id="main">
+    <section class="card">
+      <h2><span class="num">1</span>ご依頼内容を選ぶ</h2>
+      <p class="hint">複数のカテゴリを組み合わせてご予約いただけます。</p>
+      <div class="tabs" role="tablist" aria-label="メニューのカテゴリ" id="tabs"></div>
+      <div id="panels"></div>
+    </section>
+
+    <section class="card">
+      <h2><span class="num">2</span>お客様情報</h2>
+      <div class="pair">
+        <div><label class="f" for="name">お名前<span class="req">必須</span></label><input type="text" id="name" name="name" required autocomplete="name" placeholder="例）白金 太郎"></div>
+        <div><label class="f" for="kana">フリガナ<span class="req">必須</span></label><input type="text" id="kana" name="kana" required placeholder="例）シロガネ タロウ"></div>
+      </div>
+      <div class="pair">
+        <div><label class="f" for="tel">電話番号<span class="req">必須</span></label><input type="tel" id="tel" name="tel" required autocomplete="tel" inputmode="tel"></div>
+        <div><label class="f" for="email">メールアドレス<span class="req">必須</span></label><input type="email" id="email" name="email" required autocomplete="email"></div>
+      </div>
+      <label class="f" for="company">法人名<span class="opt">法人のお客様のみ</span></label>
+      <input type="text" id="company" name="company" autocomplete="organization">
+      <div class="pair">
+        <div><label class="f" for="zip">郵便番号</label><input type="text" id="zip" name="zip" inputmode="numeric" autocomplete="postal-code" placeholder="例）108-0071"></div>
+        <div><label class="f" for="pref">都道府県<span class="req">必須</span></label><select id="pref" name="pref" required><option value="">選択してください</option></select></div>
+      </div>
+      <label class="f" for="address">ご住所・建物名<span class="req">必須</span></label>
+      <input type="text" id="address" name="address" required autocomplete="street-address">
+      <label class="f">建物の種類<span class="req">必須</span></label>
+      <div class="choices">
+        <label><input type="radio" name="house" value="戸建て" required>戸建て</label>
+        <label><input type="radio" name="house" value="マンション・アパート">マンション・アパート</label>
+        <label><input type="radio" name="house" value="店舗・事務所・ビル">店舗・事務所・ビル</label>
+      </div>
+      <label class="f" for="layout">間取り・広さ<span class="opt">ハウスクリーニング・床・カーペットの場合</span></label>
+      <input type="text" id="layout" name="layout" placeholder="例）2LDK 65㎡、リビングのカーペット8畳 など">
+    </section>
+
+    <section class="card">
+      <h2><span class="num">3</span>ご希望日時</h2>
+      <p class="hint">水回りクリーニングは朝8時開始が標準です（8:30・9:00開始も可）。</p>
+      <div id="dates"></div>
+      <p class="note">※ご希望日での対応が難しい場合は、担当者より日程調整のご連絡をいたします。</p>
+    </section>
+
+    <section class="card">
+      <h2><span class="num">4</span>その他</h2>
+      <label class="f">お支払い方法</label>
+      <div class="choices">
+        <label><input type="radio" name="payment" value="現金" checked>作業当日に現金</label>
+        <label><input type="radio" name="payment" value="クレジットカード">作業当日にカード</label>
+        <label><input type="radio" name="payment" value="請求書（法人）">請求書払い（法人）</label>
+      </div>
+      <label class="f">駐車場<span class="opt">ハイエースが停められるスペース</span></label>
+      <div class="choices">
+        <label><input type="radio" name="parking" value="敷地内に駐車可" checked>敷地内に駐車可</label>
+        <label><input type="radio" name="parking" value="コインパーキング利用">なし（コインパーキング実費）</label>
+        <label><input type="radio" name="parking" value="わからない">わからない</label>
+      </div>
+      <label class="f">立会い</label>
+      <div class="choices">
+        <label><input type="radio" name="presence" value="立会いあり" checked>立ち会える</label>
+        <label><input type="radio" name="presence" value="立会いなし（鍵の受け渡し相談）">立会いなし（鍵の受け渡しを相談）</label>
+      </div>
+      <label class="f" for="memo">ご要望・気になる汚れ</label>
+      <textarea id="memo" name="memo" placeholder="例）浴室のカビが気になる／エアコンの下にベッドがある／ペットがいる など"></textarea>
+      <div class="pair">
+        <div><label class="f" for="source">DAIZENを知ったきっかけ</label>
+          <select id="source" name="source"><option value="">選択してください</option><option>Google検索</option><option>Googleマップ</option><option>Instagram</option><option>Facebook</option><option>エキテン</option><option>知り合いの紹介</option><option>リピーター</option><option>その他</option></select></div>
+        <div><label class="f" for="coupon">クーポン・紹介コード</label><input type="text" id="coupon" name="coupon"></div>
+      </div>
+      <button type="submit" class="submit" id="submitBtn">この内容で予約する</button>
+      <div class="msg" id="msg"></div>
+      <p class="note">送信後、確認メールをお送りします。作業日は担当者よりご連絡のうえ確定します。お急ぎの方はお電話（<a data-site="mobile" href="#"></a>）へ。</p>
+    </section>
+  </div>
+
+  <aside class="summary">
+    <div class="box">
+      <h3>概算金額（税込）</h3>
+      <ul id="lines"><li class="empty">メニューを選ぶと、ここに明細が表示されます。</li></ul>
+      <div class="total"><span>合計</span><span class="amount" id="total">¥0</span></div>
+      <small>駐車場代は別途実費。現地確認のうえ確定します。</small>
+      <div class="warn" id="warn" hidden></div>
+    </div>
+  </aside>
+</div>
+</form>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/site.js"></script>
+<script>
+// ============ 設定（ここを書き換えてください） ============
+// Google Apps Script のウェブアプリURL（README の手順で取得）。空のままだと送信されません。
+const GAS_URL = "";
+
+// 10月キャンペーン：この日までエアコン壁掛けが7,000円（税込）
+const CAMPAIGN_UNTIL = "2026-10-31";
+const today = new Date().toISOString().slice(0, 10);
+const AC_BASE = today <= CAMPAIGN_UNTIL ? 7000 : 8000;
+
+// 金額はすべて「税込」。税別の料金表は ×1.1 しています。
+// cap=親の数を上限に / sub=字下げ / area=面積入力 / minCharge=最低料金 / from=「〜」/ max=最大数
+const CATEGORIES = [
+  { key:"aircon", label:"エアコン", ico:"❄️", items:[
+    { id:"ac",       name:"壁掛けエアコン", desc:`${AC_BASE.toLocaleString()}円/台${AC_BASE < 8000 ? "（10月限定価格）" : ""}`, price:AC_BASE, unit:"台", init:1 },
+    { id:"acAuto",   name:"うち、お掃除機能付き", desc:"＋5,000円/台", price:5000, unit:"台", cap:"ac", sub:true },
+    { id:"acCeil",   name:"天井カセット型", desc:"26,000円/台〜", price:26000, unit:"台", from:true },
+    { heading:"オプション（台数分お選びください）" },
+    { id:"acOut",    name:"室外機清掃", desc:"4,000円/台", price:4000, unit:"台", cap:"ac" },
+    { id:"acCoat",   name:"防カビ除菌コーティング", desc:"2,500円/台", price:2500, unit:"台", cap:"ac" },
+    { id:"acDrain",  name:"ドレンホース洗浄", desc:"2,500円/台（夏の水漏れ予防に）", price:2500, unit:"台", cap:"ac" },
+    { id:"acFull",   name:"完全分解（シロッコファン・ドレンパン）", desc:"15,000円/台", price:15000, unit:"台", cap:"ac" },
+    { id:"ac3",      name:"3点退治セット", desc:"便座の黄ばみ・排水口の水あか・換気扇フィルターのホコリ｜15,000円", price:15000, unit:"回", max:1 },
+  ]},
+  { key:"wet", label:"水回り", ico:"🛁", items:[
+    { id:"wetPremium", name:"水回り5点 プレミアムセット", desc:"人気オプション7つ込み｜88,000円（税別80,000円）", price:88000, unit:"式", max:1 },
+    { id:"wetNormal",  name:"水回り5点 ノーマルセット", desc:"地域限定｜48,400円（税別44,000円）", price:48400, unit:"式", max:1 },
+    { heading:"1か所から" },
+    { id:"kitchen", name:"キッチン", desc:"38,500円（税別35,000円）", price:38500, unit:"か所" },
+    { id:"bath",    name:"浴室", desc:"49,500円（税別45,000円）", price:49500, unit:"か所" },
+    { id:"toilet",  name:"トイレ", desc:"13,200円（税別12,000円）", price:13200, unit:"か所" },
+    { id:"basin",   name:"洗面台", desc:"13,200円（税別12,000円）", price:13200, unit:"か所" },
+    { heading:"人気オプション" },
+    { id:"oFan",    name:"多機能換気扇 分解洗浄", desc:"5,500円", price:5500, unit:"台" },
+    { id:"oOidaki", name:"追い焚きクリーニング", desc:"5,500円", price:5500, unit:"回" },
+    { id:"oMirror", name:"鏡ウロコ取り", desc:"5,500円", price:5500, unit:"枚" },
+    { id:"oWasher", name:"洗濯機内部洗浄", desc:"8,800円", price:8800, unit:"台" },
+    { id:"oFridge", name:"冷蔵庫", desc:"13,200円", price:13200, unit:"台" },
+  ]},
+  { key:"carpet", label:"カーペット", ico:"🧶", items:[
+    { id:"cp6",   name:"カーペット 6畳", desc:"35,200円（税別32,000円）", price:35200, unit:"枚" },
+    { id:"cp8",   name:"カーペット 8畳", desc:"41,800円（税別38,000円）", price:41800, unit:"枚" },
+    { id:"cp12",  name:"カーペット 12畳", desc:"47,300円（税別43,000円）", price:47300, unit:"枚" },
+    { id:"sofa",  name:"ソファー", desc:"11,000円〜（税別10,000円〜）", price:11000, unit:"台", from:true },
+    { id:"cpCoat",name:"浄化洗浄コーティング", desc:"5,500円", price:5500, unit:"回", max:1 },
+  ], note:"※カーペット上の荷物は前日までに移動をお願いしています。大型家具の移動は5,000〜10,000円。" },
+  { key:"other", label:"窓・床ほか", ico:"🏠", items:[
+    { id:"window", name:"窓サッシ・ベランダ", desc:"5,500円〜/か所", price:5500, unit:"か所", from:true },
+    { id:"floor",  name:"床クリーニング（ワックス仕上げ）", desc:"1,100円/㎡｜最低料金22,000円", price:1100, unit:"㎡", minCharge:22000, area:true },
+  ], note:"※まるごとハウスクリーニング・定期プラン・法人清掃はお見積りします。「ご要望」欄に内容をご記入ください。" },
+];
+const MIN_ORDER = 22000;  // カーペット・窓・床は合計20,000円（税別）から
+const MIN_CATS = ["carpet", "other"];
+const PREFS = ["東京都","神奈川県","千葉県","埼玉県","群馬県","茨城県","栃木県","静岡県","山梨県","愛知県","三重県","岐阜県","滋賀県","大阪府","京都府","兵庫県","和歌山県","奈良県","福岡県","熊本県","佐賀県","大分県","鹿児島県","その他"];
+const TIMES = ["8時〜12時","12時〜15時","15時〜18時","時間は相談したい"];
+// ==========================================================
+
+const $ = id => document.getElementById(id);
+const ITEMS = CATEGORIES.flatMap(c => c.items.filter(m => m.id).map(m => ({ ...m, cat:c.key })));
+const qty = Object.fromEntries(ITEMS.map(m => [m.id, m.init || 0]));
+const byId = id => ITEMS.find(m => m.id === id);
+
+CATEGORIES.forEach((c, i) => {
+  $("tabs").insertAdjacentHTML("beforeend",
+    `<button type="button" class="tab" role="tab" id="tab_${c.key}" aria-controls="p_${c.key}" aria-selected="${i === 0}"><span class="ico">${c.ico}</span>${c.label}<span class="cnt" id="cnt_${c.key}"></span></button>`);
+  const rows = c.items.map(m => {
+    if (m.heading) return `<p class="subhead">${m.heading}</p>`;
+    const ctrl = m.area
+      ? `<label class="areaq"><input type="number" min="0" max="2000" inputmode="numeric" data-area="${m.id}" placeholder="0" aria-label="${m.name}の面積">${m.unit}</label>`
+      : `<div class="stepper"><button type="button" data-id="${m.id}" data-d="-1" aria-label="${m.name}を減らす">−</button><output id="q_${m.id}">0</output><button type="button" data-id="${m.id}" data-d="1" aria-label="${m.name}を増やす">＋</button></div>`;
+    return `<div class="row${m.sub ? " sub" : ""}"><div><div class="name">${m.sub ? "└ " : ""}${m.name}</div><div class="desc">${m.desc}</div></div>${ctrl}</div>`;
+  }).join("");
+  $("panels").insertAdjacentHTML("beforeend",
+    `<div class="panel" role="tabpanel" id="p_${c.key}" aria-labelledby="tab_${c.key}"${i ? " hidden" : ""}>${rows}${c.note ? `<p class="note">${c.note}</p>` : ""}</div>`);
+});
+function showPanel(key){
+  CATEGORIES.forEach(c => { $("p_" + c.key).hidden = c.key !== key; $("tab_" + c.key).setAttribute("aria-selected", c.key === key); });
+}
+$("tabs").addEventListener("click", e => { const t = e.target.closest(".tab"); if (t) showPanel(t.id.slice(4)); });
+$("panels").addEventListener("click", e => {
+  const b = e.target.closest("button[data-id]"); if (!b) return;
+  const m = byId(b.dataset.id);
+  const max = m.cap ? qty[m.cap] : (m.max || 20);
+  qty[m.id] = Math.max(0, Math.min(qty[m.id] + Number(b.dataset.d), max));
+  ITEMS.forEach(x => { if (x.cap && qty[x.id] > qty[x.cap]) qty[x.id] = qty[x.cap]; });
+  render();
+});
+$("panels").addEventListener("input", e => {
+  const id = e.target.dataset.area; if (!id) return;
+  qty[id] = Math.max(0, Math.min(2000, Math.floor(Number(e.target.value) || 0)));
+  render();
+});
+
+const itemPrice = m => { const p = m.price * qty[m.id]; return m.minCharge && qty[m.id] > 0 ? Math.max(p, m.minCharge) : p; };
+const chosen = () => ITEMS.filter(m => qty[m.id] > 0);
+const total = () => chosen().reduce((s, m) => s + itemPrice(m), 0);
+const lineText = m => `${m.name} ×${qty[m.id]}${m.unit}`;
+
+let shown = 0, raf = 0;
+function animateTotal(target){
+  const el = $("total");
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches){ shown = target; el.textContent = "¥" + target.toLocaleString(); return; }
+  if (target === shown) return;
+  cancelAnimationFrame(raf);
+  const from = shown, diff = target - from, t0 = performance.now();
+  el.classList.remove("bump"); void el.offsetWidth; el.classList.add("bump");
+  const step = now => {
+    const p = Math.min(1, (now - t0) / 500);
+    shown = Math.round(from + diff * (1 - Math.pow(1 - p, 3)));
+    el.textContent = "¥" + shown.toLocaleString();
+    if (p < 1) raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+function render(){
+  CATEGORIES.forEach(c => {
+    const n = ITEMS.filter(m => m.cat === c.key && qty[m.id] > 0).length;
+    $("cnt_" + c.key).textContent = c.key === "aircon" && qty.ac ? qty.ac + "台" : (n || "");
+  });
+  ITEMS.forEach(m => { if (!m.area) $("q_" + m.id).textContent = qty[m.id]; });
+  const ls = chosen();
+  $("lines").innerHTML = ls.length
+    ? ls.map(m => `<li><span>${lineText(m)}</span><span>${itemPrice(m).toLocaleString()}円${m.from ? "〜" : ""}</span></li>`).join("")
+    : `<li class="empty">メニューを選ぶと、ここに明細が表示されます。</li>`;
+  const minSum = ls.filter(m => MIN_CATS.includes(m.cat)).reduce((s, m) => s + itemPrice(m), 0);
+  const w = $("warn");
+  w.hidden = !(minSum > 0 && minSum < MIN_ORDER && ls.every(m => MIN_CATS.includes(m.cat)));
+  w.textContent = `カーペット・窓・床のみのご依頼は、合計${MIN_ORDER.toLocaleString()}円（税込）から承ります。`;
+  animateTotal(total());
+}
+render();
+
+PREFS.forEach(p => $("pref").insertAdjacentHTML("beforeend", `<option>${p}</option>`));
+const tomorrow = new Date(Date.now() + 864e5).toISOString().slice(0, 10);
+["第1","第2","第3"].forEach((n, i) => {
+  const req = i === 0 ? '<span class="req">必須</span>' : '<span class="opt">任意</span>';
+  $("dates").insertAdjacentHTML("beforeend", `
+    <div class="pair">
+      <div><label class="f" for="date${i+1}">${n}希望日${req}</label><input type="date" id="date${i+1}" name="date${i+1}" min="${tomorrow}"${i ? "" : " required"}></div>
+      <div><label class="f" for="time${i+1}">${n}希望時間${req}</label><select id="time${i+1}" name="time${i+1}"${i ? "" : " required"}><option value="">選択</option>${TIMES.map(t => `<option>${t}</option>`).join("")}</select></div>
+    </div>`);
+});
+
+// URLの ?menu=carpet などで最初に開くタブを指定できます
+const initial = new URLSearchParams(location.search).get("menu");
+if (CATEGORIES.some(c => c.key === initial)) showPanel(initial);
+
+// ---------- 送信 ----------
+const form = $("bookingForm"), msg = $("msg");
+const fail = text => { msg.textContent = text; msg.className = "msg ng"; };
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+  msg.className = "msg";
+  if (!chosen().length && !$("memo").value.trim()) { fail("メニューを1つ以上選ぶか、「ご要望」欄にご依頼内容をご記入ください。"); return; }
+  if (!form.checkValidity()) { fail("未入力の必須項目があります。"); form.querySelector(":invalid")?.focus(); return; }
+
+  const data = Object.fromEntries(new FormData(form).entries());
+  data.items = chosen().map(m => `${lineText(m)}（${itemPrice(m).toLocaleString()}円${m.from ? "〜" : ""}）`).join("\n");
+  data.total = total();
+  data.submittedAt = new Date().toISOString();
+
+  if (!GAS_URL) { console.log("送信データ", data); fail("【テスト表示】GAS_URL が未設定のため送信されていません（README参照）。"); return; }
+  const btn = $("submitBtn");
+  btn.disabled = true; btn.textContent = "送信中…";
+  try {
+    await fetch(GAS_URL, { method:"POST", mode:"no-cors", body:new URLSearchParams(data) });
+    form.innerHTML = `<div class="wrap"><div class="card done" style="grid-column:1/-1">
+      <h2>ご予約ありがとうございます</h2>
+      <p>ご入力のメールアドレスに確認メールをお送りしました。<br>作業日は担当者よりご連絡のうえ確定いたします。</p>
+      <p class="note">メールが届かない場合は迷惑メールフォルダをご確認いただくか、お電話ください。</p>
+      <a class="btn btn-line" href="index.html" style="margin-top:16px">トップへ戻る</a></div></div>`;
+    scrollTo({ top:0, behavior:"smooth" });
+  } catch {
+    fail("送信に失敗しました。時間をおいて再度お試しいただくか、お電話ください。");
+    btn.disabled = false; btn.textContent = "この内容で予約する";
+  }
+});
+</script>
+</body>
+</html>

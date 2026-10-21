@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>料金表｜DAIZEN ハウスクリーニング・エアコンクリーニング</title>
+<meta name="description" content="DAIZEN（株式会社大善）の料金表。エアコンクリーニング、水回り5点セット、キッチン・浴室・トイレ・洗面台、カーペット、ハウスクリーニング、定期清掃、法人清掃。税別・税込を切り替えて確認できます。">
+<link rel="icon" href="assets/img/sitelogo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.page-hero{background:var(--ink);color:#fff;padding:64px 0 56px}
+.page-hero .sec-title{color:#fff;margin-bottom:8px}
+.page-hero p{color:#b9c8d3;margin:0;max-width:720px}
+.toolbar{position:sticky;top:68px;z-index:20;background:rgba(238,243,246,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.toolbar .container{display:flex;align-items:center;gap:14px;padding-top:10px;padding-bottom:10px}
+.chips{display:flex;gap:8px;overflow-x:auto;flex:1;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chips a{flex-shrink:0;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);text-decoration:none;color:var(--ink);font-size:14px;font-weight:600}
+.chips a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tax{display:flex;background:#fff;border:1px solid var(--line);border-radius:999px;padding:3px;flex-shrink:0}
+.tax button{border:0;background:none;padding:6px 14px;border-radius:999px;font:600 13px var(--sans);cursor:pointer;color:var(--sub)}
+.tax button[aria-pressed=true]{background:var(--steel);color:#fff}
+.pblock{padding:56px 0 8px}
+.pblock h2{font-family:var(--serif);font-size:26px;color:var(--ink);margin:0 0 6px}
+.pblock .desc{color:var(--sub);margin:0 0 20px;font-size:15px}
+.pcard{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
+.pcard h3{margin:0;padding:16px 20px;background:#f6f9fb;font-size:16px;color:var(--ink);border-bottom:1px solid var(--line)}
+.prow{display:flex;justify-content:space-between;gap:16px;padding:14px 20px;border-bottom:1px solid var(--line);align-items:baseline}
+.prow:last-child{border-bottom:0}
+.prow .nm{font-weight:600}
+.prow .nt{display:block;font-size:12px;color:var(--sub);font-weight:400}
+.prow .pv{white-space:nowrap;font-family:var(--serif);font-weight:700;color:var(--ink);font-size:18px;text-align:right}
+.prow .pv small{font-family:var(--sans);font-size:11px;color:var(--sub);font-weight:400;margin-left:2px}
+.prow .pv.free{color:var(--ok)}
+.prow.hl{background:linear-gradient(90deg,#fff8ea,#fff)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:860px){.grid2{grid-template-columns:1fr}}
+.callout{background:#fff8ea;border:1px solid #f0d9a8;border-radius:14px;padding:16px 20px;font-size:14px;margin:0 0 18px}
+.cta-band{margin:56px 0 96px;background:var(--ink);color:#fff;border-radius:24px;padding:40px;text-align:center}
+.cta-band h2{font-family:var(--serif);margin:0 0 16px}
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="page-hero">
+    <div class="container">
+      <span class="eyebrow" style="color:var(--gold)">Price</span>
+      <h1 class="sec-title">料金表</h1>
+      <p>お住まいごとに汚れも広さも違うため、多くのお客様がご要望に合わせた「カスタムクリーニング」を選ばれています。下記はおおよその目安です。リピーター様には「ありがとうございます価格」もご用意しています。</p>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="container">
+      <nav class="chips" id="chips"></nav>
+      <div class="tax" role="group" aria-label="価格表示">
+        <button type="button" data-tax="ex" aria-pressed="true">税別</button>
+        <button type="button" data-tax="in" aria-pressed="false">税込</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container" id="blocks"></div>
+
+  <div class="container">
+    <div class="cta-band">
+      <h2>選ぶだけで、概算金額がすぐわかる。</h2>
+      <p style="color:#b9c8d3">予約フォームで台数・箇所を選ぶと、合計金額が自動で計算されます。</p>
+      <a class="btn btn-gold" href="booking.html">Web予約へ進む →</a>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" id="site-footer"></footer>
+
+<script src="assets/site.js"></script>
+<script>
+// ============================================================
+// 料金データ：p=金額（数値）、inc=true なら税込で登録された金額
+//   金額の代わりに text を入れると、その文字をそのまま表示します
+// ============================================================
+const PRICES = [
+  { id:"aircon", label:"エアコン", title:"エアコンクリーニング", desc:"完全分解洗浄・除菌カビ防止コーティング標準付き。1台約1時間。", cards:[
+    { title:"基本料金", rows:[
+      { n:"壁掛けエアコン 1台", p:8000, inc:true, hl:true },
+      { n:"10月限定キャンペーン：壁掛け 1台", p:7000, inc:true, until:"2026-10-31", note:"お掃除機能付きは12,000円" },
+    ]},
+    { title:"オプション（1台あたり）", rows:[
+      { n:"お掃除機能付きエアコン", p:5000, inc:true, plus:true },
+      { n:"室外機清掃", p:4000, inc:true, plus:true },
+      { n:"天井カセット型", p:26000, inc:true, plus:true },
+      { n:"防カビ除菌コーティング", p:2500, inc:true, plus:true },
+      { n:"ドレンホース洗浄", p:2500, inc:true, plus:true },
+      { n:"エアコン完全分解", p:15000, inc:true, plus:true, note:"シロッコファン・ドレンパン分解洗浄、アルミフィン内部洗浄、各パーツ取り外し洗浄" },
+      { n:"3点退治セット", p:15000, inc:true, plus:true, note:"便座周りの黄ばみ・浴室排水口の水あか・浴室換気扇フィルターのホコリをまとめて" },
+    ]},
+  ]},
+  { id:"wet", label:"水回りセット", title:"水回りセット", desc:"キッチン・レンジフード・浴室・トイレ・洗面台の5点。水回りエキスパートが午前中に一気に仕上げます（約4〜5時間）。", cards:[
+    { title:"セット料金", rows:[
+      { n:"水回り5点 プレミアムセット", p:80000, hl:true, note:"人気オプション7つ込み：グリル分解・追い焚き・多機能換気扇分解・カビ防止コーティング・鏡ウロコ取り・トイレタンク除菌・トイレ汚れ防止コーティング" },
+      { n:"水回り5点 ノーマルセット", p:44000, note:"地域限定（千代田・中央・港・江東・品川・目黒・世田谷・大田・横浜・川崎）" },
+      { n:"エプロン分解洗浄・キッチン換気扇分解洗浄", text:"今なら無料", free:true },
+    ]},
+    { title:"オプション", rows:[
+      { n:"多機能換気扇 分解洗浄", p:5000 }, { n:"追い焚きクリーニング", p:5000 },
+      { n:"カビ防止除菌コーティング", p:5000 }, { n:"鏡ウロコ取り", p:5000 },
+      { n:"グリル分解洗浄", p:5000 }, { n:"食器洗浄機", p:5000 }, { n:"電子レンジ", p:5000 },
+      { n:"オーブントースター", p:5000 }, { n:"ストレージ内部", p:7000 }, { n:"洗濯機内部洗浄", p:8000 },
+      { n:"冷蔵庫", p:12000 }, { n:"キッチンフロア パッド洗浄", p:15000 }, { n:"脱衣所フロア パッド洗浄", p:15000 },
+      { n:"脱衣所天井換気扇", p:3000 }, { n:"トイレ汚れ防止コーティング", p:5000 }, { n:"トイレタンク カビ防止", p:5000 },
+    ]},
+  ]},
+  { id:"spot", label:"箇所別", title:"箇所別メニュー", desc:"1か所からご依頼いただけます。", cards:[
+    { title:"水回り", rows:[
+      { n:"キッチン", p:35000, note:"約2〜3時間" }, { n:"浴室", p:45000, note:"約3〜5時間" },
+      { n:"トイレ", p:12000, note:"約1時間" }, { n:"洗面台", p:12000, note:"約1時間" },
+    ]},
+    { title:"お部屋・外まわり", rows:[
+      { n:"窓サッシ・ベランダ", p:5000, from:true, note:"合計20,000円（税別）から承ります" },
+      { n:"床クリーニング（10㎡あたり）", p:10000, note:"合計20,000円（税別）から承ります" },
+    ]},
+  ]},
+  { id:"carpet", label:"カーペット", title:"カーペット・ソファ", desc:"ドイツ製専用洗剤とリンサーでダニ・ホコリ・ニオイ・ペット汚れを除去。合計20,000円（税別）から承ります。", cards:[
+    { title:"基本料金", rows:[
+      { n:"カーペットクリーニング", p:15000, from:true },
+      { n:"ソファークリーニング", p:10000, from:true },
+      { n:"浄化洗浄コーティング（オプション）", p:5000 },
+    ]},
+    { title:"料金例", rows:[
+      { n:"6畳のカーペット", p:32000 }, { n:"8畳のカーペット", p:38000, hl:true }, { n:"12畳のカーペット", p:43000 },
+      { n:"家具の移動（ベッド・棚・箪笥など）", text:"5,000〜10,000円" },
+    ]},
+  ]},
+  { id:"house", label:"ハウスクリーニング", title:"まるごとハウスクリーニング", desc:"マンション・一戸建て、空室・在室とも共通料金。すべて水回りプロフェッショナルクリーニング フルセット付き。", cards:[
+    { title:"1ルーム・2ルーム系", rows:[
+      { n:"1R／1K", p:75000 }, { n:"1ルーム系 〜49㎡", text:"ご相談" },
+      { n:"2ルーム系 〜49㎡", p:160000 }, { n:"2ルーム系 〜59㎡", p:170000 }, { n:"2ルーム系 〜69㎡", p:180000 },
+      { n:"2ルーム系 〜79㎡", p:190000 }, { n:"2ルーム系 〜89㎡", p:195000 }, { n:"2ルーム系 〜99㎡", p:210000 },
+    ]},
+    { title:"3ルーム・4ルーム系", rows:[
+      { n:"3ルーム系 〜59㎡", p:180000 }, { n:"3ルーム系 〜69㎡", p:190000 }, { n:"3ルーム系 〜79㎡", p:195000 },
+      { n:"3ルーム系 〜89㎡", p:210000 }, { n:"3ルーム系 〜99㎡", p:220000 },
+      { n:"4ルーム系 〜79㎡", p:220000 }, { n:"4ルーム系 〜89㎡", p:230000 }, { n:"4ルーム系 〜99㎡", p:240000 },
+      { n:"100㎡超・4ルーム系 110㎡〜", text:"ご相談" },
+    ]},
+  ]},
+  { id:"regular", label:"定期プラン", title:"12ヶ月 定期プレミアム", desc:"月1回（約3〜4時間）の訪問で、ご自宅を一年中最上級の空間に。内容はご相談のうえオーダーメイドで設計します。", cards:[
+    { title:"月額料金の例", rows:[
+      { n:"プレミアム フルコース", p:58000, unit:"/月", hl:true, note:"水回り〜居室〜ベランダ・窓〜外構〜マイカーシートまで。ご利用料金から1万円をユニセフ・国境なき医師団に寄付" },
+      { n:"プレミアム スマートコース", p:30000, unit:"/月", note:"フルコースのライト版" },
+    ]},
+    { title:"法人・共用部（参考例）", rows:[
+      { n:"飲食店 25㎡ 床洗浄ワックス＋トイレ・ガラス・照明", p:35000 },
+      { n:"8階建てビル共用部 月次定期清掃", p:45000, unit:"/月" },
+      { n:"オフィス カーペット洗浄 150㎡×8フロア", p:90000 },
+      { n:"8階建てマンション 月次定期＋週2巡回", p:100000, unit:"/月" },
+    ]},
+  ]},
+];
+
+let taxIn = false;
+const yen = n => n.toLocaleString() + "円";
+function priceHtml(r){
+  if (r.text) return `<span class="pv${r.free ? " free" : ""}">${r.text}</span>`;
+  const ex = r.inc ? Math.round(r.p / 1.1) : r.p, inc = r.inc ? r.p : Math.round(r.p * 1.1);
+  const v = taxIn ? inc : ex;
+  return `<span class="pv">${r.plus ? "+" : ""}${yen(v)}${r.from ? "〜" : ""}${r.unit || ""}<small>${taxIn ? "税込" : "税別"}</small></span>`;
+}
+function render(){
+  const today = new Date().toISOString().slice(0, 10);
+  document.getElementById("blocks").innerHTML = PRICES.map(b => `
+    <section class="pblock" id="${b.id}">
+      <h2>${b.title}</h2><p class="desc">${b.desc}</p>
+      <div class="grid2">${b.cards.map(c => `
+        <div class="pcard"><h3>${c.title}</h3>${c.rows.filter(r => !r.until || today <= r.until).map(r => `
+          <div class="prow${r.hl ? " hl" : ""}"><span class="nm">${r.n}${r.note ? `<span class="nt">${r.note}</span>` : ""}</span>${priceHtml(r)}</div>`).join("")}
+        </div>`).join("")}
+      </div>
+    </section>`).join("") + `
+    <section class="pblock">
+      <div class="callout"><strong>追加料金について：</strong>部品を外して内部を確認した際、極めて重い堆積汚れ・カビ・油汚れがあり除去に大幅な工数がかかる場合のみ、「強化清掃」（1部門5,000〜10,000円・税別）を作業前にご相談します。ご了承なく追加することはありません。<br><strong>駐車場：</strong>敷地内に駐車できない場合はコインパーキングの実費をご負担ください。<br><strong>お支払い：</strong>現金・クレジットカード（作業終了後に現地で）。</div>
+    </section>`;
+  document.getElementById("chips").innerHTML = PRICES.map(b => `<a href="#${b.id}">${b.label}</a>`).join("");
+}
+document.querySelectorAll(".tax button").forEach(b => b.onclick = () => {
+  taxIn = b.dataset.tax === "in";
+  document.querySelectorAll(".tax button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  render();
+});
+render();
+// 表示中のセクションのチップを強調
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  document.querySelectorAll(".chips a").forEach(a => a.classList.toggle("on", a.hash === "#" + e.target.id));
+}), { rootMargin:"-40% 0px -55% 0px" });
+document.querySelectorAll(".pblock[id]").forEach(s => io.observe(s));
+</script>
+</body>
+</html>

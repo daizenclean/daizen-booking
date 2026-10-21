@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>カーペット動画｜DAIZEN</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/sitelogo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700;800&family=Noto+Serif+JP:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+body{background:var(--ink);color:#e7eef3}
+.wrap{max-width:980px;margin:0 auto;padding:40px 20px 120px;display:grid;grid-template-columns:400px 1fr;gap:48px;align-items:start}
+@media (max-width:860px){.wrap{grid-template-columns:1fr}}
+canvas{width:100%;aspect-ratio:9/16;border-radius:24px;box-shadow:0 30px 80px rgba(0,0,0,.5);display:block;background:#000}
+.ctrl{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.ctrl button{flex:1;background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:12px 16px;font:700 14px var(--sans);cursor:pointer}
+.ctrl button[data-movie=record]{background:var(--gold);border-color:var(--gold)}
+.ctrl button:disabled{opacity:.6;cursor:wait}
+h1{font-family:var(--serif);color:#fff;margin:0 0 12px}
+ol{padding-left:20px}
+li{margin-bottom:8px}
+.box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px 20px;margin-top:20px;font-size:14px}
+a{color:var(--gold)}
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+<div class="wrap">
+  <div class="carpet-movie">
+    <canvas width="720" height="1280" aria-label="カーペットクリーニング紹介動画"></canvas>
+    <div class="ctrl">
+      <button type="button" data-movie="play">▶ 再生</button>
+      <button type="button" data-movie="record">動画ファイルとして保存</button>
+    </div>
+  </div>
+  <div>
+    <span class="eyebrow" style="color:var(--gold)">For Google Business Profile</span>
+    <h1>カーペットクリーニング動画</h1>
+    <p>サイトのトップページに組み込んでいる動画と同じものです。縦型（720×1280）・約32秒。Googleビジネスプロフィール、Instagramリール、YouTubeショートにそのまま使えます。</p>
+    <h2 style="font-size:18px;color:#fff;margin-top:28px">動画ファイルの作り方</h2>
+    <ol>
+      <li>パソコンの <strong>Google Chrome</strong> でこのページを開きます。</li>
+      <li>「動画ファイルとして保存」を押すと、最初から最後まで再生しながら録画します（約32秒、タブはそのまま開いておいてください）。</li>
+      <li>終わると <code>daizen-carpet-cleaning.mp4</code>（または .webm）がダウンロードされます。</li>
+    </ol>
+    <h2 style="font-size:18px;color:#fff;margin-top:28px">Googleビジネスプロフィールへの追加</h2>
+    <ol>
+      <li>Googleで「ハウスクリーニングDAIZEN」を検索し、管理画面の「写真を追加」を開きます。</li>
+      <li>「動画」から保存したファイルをアップロードします（30秒以内・75MB以下が目安。長いと弾かれる場合があります）。</li>
+    </ol>
+    <div class="box">💡 さらに良くするには：実際の作業現場で、<strong>透明タンクに汚水が溜まっていく様子</strong>や<strong>リンサーのノズル越しに汚れが吸われる瞬間</strong>を5秒ずつ撮っておくと、このアニメーションと組み合わせた「本物の」ビフォーアフター動画にできます。撮影したらお送りください。</div>
+  </div>
+</div>
+<footer class="site-footer" id="site-footer"></footer>
+<script src="assets/site.js"></script>
+<script src="assets/carpet-movie.js"></script>
+<script>CarpetMovie.mount(document.querySelector(".carpet-movie"));</script>
+</body>
+</html>
