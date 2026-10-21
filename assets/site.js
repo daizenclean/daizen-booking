@@ -13,7 +13,7 @@ const SITE = {
   ekiten: "https://www.ekiten.jp/shop_42207623/reserve/",
   // Google Apps Script のウェブアプリURL（README の手順で取得）。
   // 予約フォームの送信先と、Google口コミ（評価・件数）の自動更新の両方に使います。
-  gasUrl: "",
+  gasUrl: "https://script.google.com/macros/s/AKfycbys5FPryJ91LtK9opx7Do1_65IifPgfROy3a1ec3EwE-KPVysIV00ich69rZIwAxMfo/exec",
   sns: {
     instagram: "https://www.instagram.com/daizen_seisou/",
     x: "https://twitter.com/DAIZEN_clean",
