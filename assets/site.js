@@ -28,6 +28,8 @@ const NAV = [
   ["index.html#flow", "ご利用の流れ"],
   ["index.html#faq", "よくある質問"],
   ["index.html#company", "会社概要"],
+  ["column/index.html", "コラム"],
+  ["recruit.html", "求人"],
 ];
 
 const ICON = {
@@ -39,6 +41,11 @@ const ICON = {
   facebook: '<svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.1c-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg>',
 };
 
+// column/ など下の階層のページは <html data-base="../"> を付けると、リンクが正しく組み立てられます
+const BASE = document.documentElement.dataset.base || "";
+const link = h => /^(https?:|mailto:|tel:)/.test(h) ? h : BASE + h;
+const isHere = (h, here) => h.startsWith("column/") ? location.pathname.includes("/column/") : h === here;
+
 const telHref = n => "tel:" + n.replace(/[^\d+]/g, "");
 
 function renderChrome(){
@@ -46,11 +53,11 @@ function renderChrome(){
   const header = document.getElementById("site-header");
   if (header) header.innerHTML = `
     <div class="container">
-      <a class="brand" href="index.html"><img src="assets/img/sitelogo.webp" alt="DAIZEN" width="76" height="40"><span>ハウスクリーニング<br>白金台・創業1984年</span></a>
+      <a class="brand" href="${link("index.html")}"><img src="${link("assets/img/sitelogo.webp")}" alt="DAIZEN" width="76" height="40"><span>ハウスクリーニング<br>白金台・創業1984年</span></a>
       <button class="menu-toggle" aria-label="メニュー" aria-expanded="false" aria-controls="gnav">${ICON.menu}</button>
       <nav class="gnav" id="gnav">
-        ${NAV.map(([h, t]) => `<a href="${h}"${h === here ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
-        <a class="btn btn-gold btn-sm" href="booking.html">${ICON.cal}かんたん予約</a>
+        ${NAV.map(([h, t]) => `<a href="${link(h)}"${isHere(h, here) ? ' aria-current="page"' : ""}>${t}</a>`).join("")}
+        <a class="btn btn-gold btn-sm" href="${link("booking.html")}">${ICON.cal}かんたん予約</a>
       </nav>
     </div>`;
 
@@ -59,7 +66,7 @@ function renderChrome(){
     <div class="container">
       <div class="cols">
         <div>
-          <img src="assets/img/sitelogo.webp" alt="DAIZEN" width="120" height="64" style="border-radius:10px">
+          <img src="${link("assets/img/sitelogo.webp")}" alt="DAIZEN" width="120" height="64" style="border-radius:10px">
           <p style="margin:14px 0 4px">${SITE.company}</p>
           <p style="margin:0">${SITE.address}</p>
           <div class="sns">
@@ -70,7 +77,7 @@ function renderChrome(){
         </div>
         <div>
           <h4>MENU</h4>
-          <ul>${NAV.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join("")}<li><a href="booking.html">かんたん予約</a></li></ul>
+          <ul>${NAV.map(([h, t]) => `<li><a href="${link(h)}">${t}</a></li>`).join("")}<li><a href="${link("booking.html")}">かんたん予約</a></li></ul>
         </div>
         <div>
           <h4>CONTACT</h4>
@@ -83,13 +90,13 @@ function renderChrome(){
           </ul>
         </div>
       </div>
-      <div class="copy"><span>© ${new Date().getFullYear()} ${SITE.company}（DAIZEN）</span><a href="index.html#law">特定商取引法に基づく表記</a></div>
+      <div class="copy"><span>© ${new Date().getFullYear()} ${SITE.company}（DAIZEN）</span><a href="${link("index.html#law")}">特定商取引法に基づく表記</a></div>
     </div>`;
 
   document.body.insertAdjacentHTML("beforeend", `
     <div class="fixed-cta">
       <a class="tel" href="${telHref(SITE.mobile)}">${ICON.tel}電話する</a>
-      <a class="book" href="booking.html">${ICON.cal}料金を見て予約</a>
+      <a class="book" href="${link("booking.html")}">${ICON.cal}料金を見て予約</a>
     </div>`);
 
   // data-site="tel" などを連絡先で埋める

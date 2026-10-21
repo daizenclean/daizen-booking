@@ -8,6 +8,9 @@
 | `index.html` | トップ（サービス・カーペット動画・DAIZENメソッド・流れ・FAQ・会社概要・特商法） |
 | `price.html` | 料金表（税別／税込の切り替え付き） |
 | `booking.html` | Web予約（メニューを選ぶと概算金額を自動計算） |
+| `column/index.html` | コラム一覧（daizen-clean.com から移植した134記事・年で絞り込み） |
+| `column/<ID>.html` | コラム記事（画像は `assets/column/`、動画は daizen-clean.com から再生） |
+| `recruit.html` | 求人・採用情報（応募はエンゲージへ） |
 | `movie.html` | カーペット動画の書き出し用ページ（ナビには出していません） |
 
 ## よく変更する場所
