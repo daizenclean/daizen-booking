@@ -30,6 +30,7 @@ const NAV = [
   ["index.html#faq", "よくある質問"],
   ["index.html#company", "会社概要"],
   ["column/index.html", "コラム"],
+  ["news.html", "ニュース"],
   ["recruit.html", "求人"],
 ];
 
