@@ -18,6 +18,7 @@ const SITE = {
     instagram: "https://www.instagram.com/daizen_seisou/",
     x: "https://twitter.com/DAIZEN_clean",
     facebook: "https://www.facebook.com/profile.php?id=100083746310246",
+    ameblo: "https://ameblo.jp/0911kuma/",
   },
 };
 
@@ -41,6 +42,7 @@ const ICON = {
   instagram: '<svg viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 8.2a3.2 3.2 0 1 1 0-6.4 3.2 3.2 0 0 1 0 6.4zM17.3 5.5a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zM12 2c-2.7 0-3 0-4.1.1C5 2.2 2.2 5 2.1 7.9 2 9 2 9.3 2 12s0 3 .1 4.1c.1 2.9 2.9 5.7 5.8 5.8 1.1.1 1.4.1 4.1.1s3 0 4.1-.1c2.9-.1 5.7-2.9 5.8-5.8.1-1.1.1-1.4.1-4.1s0-3-.1-4.1C21.8 5 19 2.2 16.1 2.1 15 2 14.7 2 12 2z"/></svg>',
   x: '<svg viewBox="0 0 24 24"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.2-8.3L1.8 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg>',
   facebook: '<svg viewBox="0 0 24 24"><path d="M13.5 21v-7.5H16l.4-3h-2.9V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4a21 21 0 0 0-2.3-.1c-2.3 0-3.8 1.4-3.8 3.9v2.3H8v3h2.5V21z"/></svg>',
+  ameblo: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5" fill="none" stroke="currentColor" stroke-width="2"/><text x="12" y="16.8" font-size="12" text-anchor="middle" fill="currentColor" font-family="sans-serif" font-weight="700">a</text></svg>',
 };
 
 // column/ など下の階層のページは <html data-base="../"> を付けると、リンクが正しく組み立てられます
@@ -75,6 +77,7 @@ function renderChrome(){
             <a href="${SITE.sns.instagram}" aria-label="Instagram" target="_blank" rel="noopener">${ICON.instagram}</a>
             <a href="${SITE.sns.x}" aria-label="X" target="_blank" rel="noopener">${ICON.x}</a>
             <a href="${SITE.sns.facebook}" aria-label="Facebook" target="_blank" rel="noopener">${ICON.facebook}</a>
+            <a href="${SITE.sns.ameblo}" aria-label="アメブロ" target="_blank" rel="noopener">${ICON.ameblo}</a>
           </div>
         </div>
         <div>
