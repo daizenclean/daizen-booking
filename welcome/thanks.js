@@ -59,7 +59,7 @@
 
   // ---------- 吹き出し ----------
   function avatar(c) {
-    var src = HERE + (c ? D.chars[c].img : 'chara/base.svg');
+    var src = HERE + (c ? D.chars[c].img : 'chara/wool.svg');
     return '<div class="avatar chara" aria-hidden="true"><img src="' + src + '" alt=""></div>';
   }
   function row(side, html) {
