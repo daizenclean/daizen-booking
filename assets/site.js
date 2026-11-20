@@ -17,7 +17,7 @@ const SITE = {
   sns: {
     instagram: "https://www.instagram.com/daizen_seisou/",
     x: "https://twitter.com/DAIZEN_clean",
-    facebook: "https://www.facebook.com/profile.php?id=100083746310246",
+    facebook: "https://www.facebook.com/daizen.clean",
     ameblo: "https://ameblo.jp/0911kuma/",
   },
 };
