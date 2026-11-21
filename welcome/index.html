@@ -321,7 +321,7 @@
         <select id="f_payment" name="payment">
           <option value="onsite">作業当日にお支払い（現金）</option>
           <option value="paypay">作業当日にお支払い（PayPay）</option>
-          <option value="paypal">PayPal請求書（メールで届きます。カード払い可）</option>
+          <option value="paypal">カード決済（請求書がメールで届きます）</option>
         </select>
         <label for="f_receiptName">領収書の宛名 <small>任意・領収書が必要な方</small></label>
         <input id="f_receiptName" name="receipt_name" autocomplete="off" placeholder="例：株式会社〇〇　／　〇〇 様">
@@ -790,7 +790,7 @@
       nominate: $('f_nominate').checked, nominateName: (data.nominate_name || '').trim()
     };
     // 「予約の中身」で読み上げる一覧（お客様ご本人の画面にだけ出す。送らない）
-    var PAYL = { onsite: '作業当日に現金', paypay: '作業当日に PayPay', paypal: 'PayPal の請求書' };
+    var PAYL = { onsite: '作業当日に現金', paypay: '作業当日に PayPay', paypal: 'カード決済' };
     var wishes = ['1', '2', '3'].map(function (n) {
       var d = String(data['date' + n] || '').slice(0, 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
