@@ -25,6 +25,7 @@ const SITE = {
 const NAV = [
   ["index.html#services", "サービス"],
   ["price.html", "料金表"],
+  ["welcome/", "チャットで予約"],
   ["premium.html", "プレミアム"],
   ["index.html#method", "DAIZENメソッド"],
   ["index.html#flow", "ご利用の流れ"],

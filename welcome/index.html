@@ -218,7 +218,7 @@
 <body>
   <header>
     <span class="name">DAIZEN</span>
-    <span class="hdr-est" id="hdrEst" hidden aria-live="polite"><small>概算</small><span>¥<b id="hdrTotal">8,000</b></span><span class="tax">税込</span></span>
+    <span class="hdr-est" id="hdrEst" hidden aria-live="polite"><small>概算</small><span>¥<b id="hdrTotal">6,000</b></span><span class="tax">税込</span></span>
     <button type="button" class="reset" id="reset">選び直し</button>
   </header>
 
@@ -244,7 +244,7 @@
       <p class="note" style="margin:0 0 12px">台数とオプションを選ぶと概算が出ます。送信後すぐに確認メールが届き、作業日は担当者よりご連絡のうえ確定します。</p>
       <form id="form" novalidate>
         <h3>1. 台数とオプションを選ぶ</h3>
-        <div class="row-item"><div class="t"><b>エアコン台数（壁掛け）</b><span>8,000円/台</span></div>
+        <div class="row-item"><div class="t"><b>エアコン台数（壁掛け）</b><span>6,000円/台（12月キャンペーン・通常8,000円）</span></div>
           <div class="ctr"><button type="button" data-k="units" data-d="-1" aria-label="エアコン台数（壁掛け）を減らす">−</button><output id="o_units">1</output><button type="button" data-k="units" data-d="1" aria-label="エアコン台数（壁掛け）を増やす">＋</button></div></div>
         <div class="row-item"><div class="t"><b>うち、お掃除機能付き</b><span>＋5,000円/台</span></div>
           <div class="ctr"><button type="button" data-k="auto" data-d="-1" aria-label="うち、お掃除機能付きを減らす">−</button><output id="o_auto">0</output><button type="button" data-k="auto" data-d="1" aria-label="うち、お掃除機能付きを増やす">＋</button></div></div>
@@ -261,7 +261,7 @@
           <div class="ctr"><button type="button" data-k="drain" data-d="-1" aria-label="ドレンホース洗浄を減らす">−</button><output id="o_drain">0</output><button type="button" data-k="drain" data-d="1" aria-label="ドレンホース洗浄を増やす">＋</button></div></div>
         <div class="row-item" style="border-bottom:0"><div class="t"><b>おまとめセット</b><span>室外機＋防カビ・抗菌コート｜6,500円/台</span></div>
           <div class="ctr"><button type="button" data-k="omatome" data-d="-1" aria-label="おまとめセットを減らす">−</button><output id="o_omatome">0</output><button type="button" data-k="omatome" data-d="1" aria-label="おまとめセットを増やす">＋</button></div></div>
-        <div class="est"><b>概算金額</b><div class="v">¥<span id="e_total">8,000</span><small> 円（税込・駐車場代別）</small></div></div>
+        <div class="est"><b>概算金額</b><div class="v">¥<span id="e_total">6,000</span><small> 円（税込・駐車場代別）</small></div></div>
 
         <h3 style="margin-top:20px">2. ご予約情報を入力する</h3>
         <div class="g2">
@@ -508,7 +508,7 @@
   });
   $('goForm').addEventListener('click', function () { showForm('はいから'); });
   // ---------- 予約フォーム（予約ページと同じ計算・同じ必須チェック。送信はしない） ----------
-  var NORMAL = { unit: 8000, auto: 5000, set3: 7000, coat: 2500, outdoor: 4000, drain: 2500, tenkase: 26000, omatome: 6500 };
+  var NORMAL = { unit: 6000, auto: 5000, set3: 7000, coat: 2500, outdoor: 4000, drain: 2500, tenkase: 26000, omatome: 6500 };
   // 天カセは壁掛けと別に数える。おまとめは壁掛け＋天カセの台数まで
   var ZERO = { units: 1, auto: 0, set3: 0, coat: 0, outdoor: 0, drain: 0, tenkase: 0, omatome: 0 };
   var st = Object.assign({}, ZERO);
@@ -681,7 +681,7 @@
       total: total(), normal_total: total(), submitted_at: new Date().toISOString(), page: location.href,
       src: 'welcome' + (cfg.source ? '?' + cfg.source : '')
     });
-    if (!CONFIG.GAS_URL) { $('formMsg').textContent = 'プレビュー版のため送信はできません。ご予約はお電話（☎03-3442-5646）でお願いします。'; $('formMsg').hidden = false; return; }
+    if (!CONFIG.GAS_URL) { $('formMsg').textContent = 'このページからの送信は準備中です。ご予約はお電話（☎03-3442-5646）でお願いします。'; $('formMsg').hidden = false; return; }
     btn.disabled = true; btn.textContent = '送信中…'; $('formMsg').hidden = true;
     fetch(CONFIG.GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
       .then(function (r) { return r.text(); })
@@ -828,7 +828,7 @@
     $('f_nominate').checked = true;
     $('doneMsg').innerHTML = '受付番号 <b>R0000-0</b>（試し）<br>（試しの画面です。予約は送っていません）';
     $('waitPanel').removeAttribute('hidden');
-    startThanks('R0000-0', [{ name: 'エアコンクリーニング 2台', amount: 16000 }, { name: '3点セット（防カビ抗菌コート・室外機・ドレンホース） 1台', amount: 7000 }], { date1: (function () { var t = new Date(Date.now() + 9 * 36e5 + 7 * 864e5); return t.toISOString().slice(0, 10); })(), time1: '9時〜12時', area: '東京', address: '（試しの住所）', housing: '戸建て', pet: 'あり', pet_count: '1', payment: 'onsite', parking: '敷地内に駐車可', nominate_name: '（試しのスタッフ）' });
+    startThanks('R0000-0', [{ name: 'エアコンクリーニング 2台', amount: 12000 }, { name: '3点セット（防カビ抗菌コート・室外機・ドレンホース） 1台', amount: 7000 }], { date1: (function () { var t = new Date(Date.now() + 9 * 36e5 + 7 * 864e5); return t.toISOString().slice(0, 10); })(), time1: '9時〜12時', area: '東京', address: '（試しの住所）', housing: '戸建て', pet: 'あり', pet_count: '1', payment: 'onsite', parking: '敷地内に駐車可', nominate_name: '（試しのスタッフ）' });
   } else {
     track('到着');
     start();
