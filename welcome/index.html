@@ -137,6 +137,15 @@
   /* キャラクター */
   .avatar.chara { background: #fff; padding: 0; overflow: hidden; }
   .avatar.chara img { width: 40px; height: 40px; display: block; }
+
+  /* 案内係を選ぶ（最初の画面） */
+  .chara-pick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0 4px; }
+  .chara-card { background: #fff; border: 2px solid var(--line); border-radius: 16px; padding: 14px 10px 12px; text-align: center; cursor: pointer; font: inherit; color: var(--text); position: relative; }
+  .chara-card:hover, .chara-card:focus-visible { border-color: var(--accent); }
+  .chara-card img { width: 72px; height: 72px; display: block; margin: 0 auto 6px; }
+  .chara-card b { display: block; font-size: 15px; }
+  .chara-card span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .chara-card i { position: absolute; top: 8px; left: 8px; font-style: normal; font-size: 11px; background: var(--accent); color: #fff; border-radius: 999px; padding: 2px 8px; }
   .wait img { width: 140px; height: auto; display: block; margin: 0 auto 8px; animation: bob 1.6s ease-in-out infinite; }
   @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
   @media (prefers-reduced-motion: reduce) { .wait img { animation: none; } }
@@ -233,6 +242,8 @@
     <div class="choices" id="toForm" hidden>
       <button type="button" class="btn primary wide" id="goForm">ご予約フォームへ進む</button>
     </div>
+
+    <div class="chara-pick" id="charaPick" hidden></div>
 
     <section class="panel" id="menuPanel" hidden>
       <h2>メニュー</h2>
@@ -458,14 +469,50 @@
       if (then) then();
     }, reduce ? 0 : 900);
   }
-  function hideAll() { ['choices', 'toForm', 'menuPanel', 'formPanel', 'waitPanel', 'thanksPanel', 'hdrEst'].forEach(function (id) { $(id).hidden = true; }); }
+  function hideAll() { ['choices', 'toForm', 'charaPick', 'menuPanel', 'formPanel', 'waitPanel', 'thanksPanel', 'hdrEst'].forEach(function (id) { $(id).hidden = true; }); }
 
   function start() {
     timers.forEach(clearTimeout); timers = [];
     chat.innerHTML = '';
     hideAll();
     resetForm();
-    later(function () { say(MSG.first, function () { $('choices').hidden = false; }); }, reduce ? 0 : 300);
+    later(pickChara, reduce ? 0 : 300);
+  }
+
+  // ---------- 最初に案内係を選ぶ ----------
+  function pickChara() {
+    var D = window.THANKS_DATA;
+    if (!D || !D.chars) { say(MSG.first, function () { $('choices').hidden = false; }); return; }
+    say('ご覧いただきありがとうございます。ご案内する案内係を選んでください。', function () {
+      var box = $('charaPick');
+      var last = '';
+      try { last = localStorage.getItem('thanks_chara') || ''; } catch (e) {}
+      box.innerHTML = Object.keys(D.chars).map(function (k) {
+        var c = D.chars[k];
+        return '<button type="button" class="chara-card" data-c="' + k + '">' + (last === k ? '<i>前回</i>' : '') + '<img src="' + c.img + '" alt=""><b>' + esc(c.name) + '</b><span>' + esc(c.kind) + '｜' + esc(c.pick) + '</span></button>';
+      }).join('');
+      box.hidden = false;
+      box.querySelectorAll('.chara-card').forEach(function (b) {
+        b.addEventListener('click', function () { chooseChara(b.dataset.c); });
+      });
+      box.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+  function chooseChara(k) {
+    var D = window.THANKS_DATA;
+    var c = D && D.chars[k];
+    if (!c) { say(MSG.first, function () { $('choices').hidden = false; }); return; }
+    $('charaPick').hidden = true;
+    CHARA = c.img;
+    try { localStorage.setItem('thanks_chara', k); } catch (e) {}
+    track('キャラ選択', k);
+    addRow('out', esc(c.name) + 'にする');
+    var lines = (k === 'bruce' && c.ask && c.ask.length) ? [c.ask[0]] : (c.hello || []).slice(0, 2);
+    var i = 0;
+    (function next() {
+      if (i < lines.length) { say(lines[i++], next); }
+      else { say(MSG.first, function () { $('choices').hidden = false; }); }
+    })();
   }
 
   function showForm(note, menuCode) {
