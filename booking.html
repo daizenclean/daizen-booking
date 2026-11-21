@@ -185,8 +185,8 @@ textarea{min-height:100px;resize:vertical}
 // 送信先（Google Apps Script）。空のままだと送信されません。
 const GAS_URL = SITE.gasUrl;   // URL は assets/site.js の SITE.gasUrl に設定
 
-// 10月キャンペーン：この日までエアコン壁掛けが7,000円（税込）
-const CAMPAIGN_UNTIL = "2026-10-31";
+// 11月キャンペーン：この日までエアコン壁掛けが7,000円（税込）
+const CAMPAIGN_UNTIL = "2026-11-30";
 const today = new Date().toISOString().slice(0, 10);
 const AC_BASE = today <= CAMPAIGN_UNTIL ? 7000 : 8000;
 
@@ -194,7 +194,7 @@ const AC_BASE = today <= CAMPAIGN_UNTIL ? 7000 : 8000;
 // cap=親の数を上限に / sub=字下げ / area=面積入力 / minCharge=最低料金 / from=「〜」/ max=最大数
 const CATEGORIES = [
   { key:"aircon", label:"エアコン", ico:"❄️", items:[
-    { id:"ac",       name:"壁掛けエアコン", desc:`${AC_BASE.toLocaleString()}円/台${AC_BASE < 8000 ? "（10月限定価格）" : ""}`, price:AC_BASE, unit:"台", init:1 },
+    { id:"ac",       name:"壁掛けエアコン", desc:`${AC_BASE.toLocaleString()}円/台${AC_BASE < 8000 ? "（11月限定価格）" : ""}`, price:AC_BASE, unit:"台", init:1 },
     { id:"acAuto",   name:"うち、お掃除機能付き", desc:"＋5,000円/台", price:5000, unit:"台", cap:"ac", sub:true },
     { id:"acCeil",   name:"天井カセット型", desc:"26,000円/台〜", price:26000, unit:"台", from:true },
     { heading:"オプション（台数分お選びください）" },
