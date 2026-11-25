@@ -257,7 +257,7 @@
         <h3>1. 台数とオプションを選ぶ</h3>
         <div class="row-item"><div class="t"><b>エアコン台数（壁掛け）</b><span>6,000円/台（12月キャンペーン・通常8,000円）</span></div>
           <div class="ctr"><button type="button" data-k="units" data-d="-1" aria-label="エアコン台数（壁掛け）を減らす">−</button><output id="o_units">1</output><button type="button" data-k="units" data-d="1" aria-label="エアコン台数（壁掛け）を増やす">＋</button></div></div>
-        <div class="row-item"><div class="t"><b>うち、お掃除機能付き</b><span>＋5,000円/台</span></div>
+        <div class="row-item"><div class="t"><b>うち、お掃除機能付き</b><span>＋4,000円/台</span></div>
           <div class="ctr"><button type="button" data-k="auto" data-d="-1" aria-label="うち、お掃除機能付きを減らす">−</button><output id="o_auto">0</output><button type="button" data-k="auto" data-d="1" aria-label="うち、お掃除機能付きを増やす">＋</button></div></div>
         <div class="row-item"><div class="t"><b>天井埋め込み（天カセ・業務用）</b><span>26,000円/台｜対応できない地域があります。担当者よりご連絡します</span></div>
           <div class="ctr"><button type="button" data-k="tenkase" data-d="-1" aria-label="天井埋め込み（天カセ・業務用）を減らす">−</button><output id="o_tenkase">0</output><button type="button" data-k="tenkase" data-d="1" aria-label="天井埋め込み（天カセ・業務用）を増やす">＋</button></div></div>
@@ -555,7 +555,7 @@
   });
   $('goForm').addEventListener('click', function () { showForm('はいから'); });
   // ---------- 予約フォーム（予約ページと同じ計算・同じ必須チェック。送信はしない） ----------
-  var NORMAL = { unit: 6000, auto: 5000, set3: 7000, coat: 2500, outdoor: 4000, drain: 2500, tenkase: 26000, omatome: 6500 };
+  var NORMAL = { unit: 6000, auto: 4000, set3: 7000, coat: 2500, outdoor: 4000, drain: 2500, tenkase: 26000, omatome: 6500 };
   // 天カセは壁掛けと別に数える。おまとめは壁掛け＋天カセの台数まで
   var ZERO = { units: 1, auto: 0, set3: 0, coat: 0, outdoor: 0, drain: 0, tenkase: 0, omatome: 0 };
   var st = Object.assign({}, ZERO);
