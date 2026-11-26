@@ -135,7 +135,7 @@ const PRICES = [
   { id:"aircon", label:"エアコン", title:"エアコンクリーニング", desc:"完全分解洗浄・除菌カビ防止コーティング標準付き。1台約1時間。", cards:[
     { title:"基本料金", rows:[
       { n:"壁掛けエアコン 1台", p:8000, inc:true, hl:true },
-      { n:"12月限定キャンペーン：壁掛け 1台", p:6000, inc:true, until:"2026-12-31", note:"お掃除機能付きは10,000円／オプション3点セット7,000円" },
+      { n:"12月限定キャンペーン：壁掛け 1台", p:6000, inc:true, fixed:true, until:"2026-12-31", note:"お掃除機能付きは10,000円／オプション3点セット7,000円" },
     ]},
     { title:"オプション（1台あたり）", rows:[
       { n:"お掃除機能付きエアコン", p:5000, inc:true, plus:true },
@@ -218,6 +218,7 @@ let taxIn = false;
 const yen = n => n.toLocaleString() + "円";
 function priceHtml(r){
   if (r.text) return `<span class="pv${r.free ? " free" : ""}">${r.text}</span>`;
+  if (r.fixed) return `<span class="pv">${yen(r.p)}<small>税込</small></span>`;
   const ex = r.inc ? Math.round(r.p / 1.1) : r.p, inc = r.inc ? r.p : Math.round(r.p * 1.1);
   const v = taxIn ? inc : ex;
   return `<span class="pv">${r.plus ? "+" : ""}${yen(v)}${r.from ? "〜" : ""}${r.unit || ""}<small>${taxIn ? "税込" : "税別"}</small></span>`;
