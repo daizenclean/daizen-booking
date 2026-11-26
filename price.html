@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>料金表｜DAIZEN ハウスクリーニング・エアコンクリーニング</title>
-<meta name="description" content="DAIZEN（株式会社大善）の料金表。エアコンクリーニング、水回り5点セット、キッチン・浴室・トイレ・洗面台、カーペット、ハウスクリーニング、定期清掃、法人清掃。税別・税込を切り替えて確認できます。">
+<meta name="description" content="DAIZEN（株式会社大善）の料金表。エアコンクリーニング、水回り5点セット、キッチン・浴室・トイレ・洗面台、カーペット、ハウスクリーニング、定期清掃、法人清掃。価格はすべて税込表示です。">
 <link rel="icon" href="assets/img/sitelogo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -49,10 +49,10 @@
     "name": "クリーニングサービス",
     "itemListElement": [
       {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "エアコンクリーニング", "description": "壁掛けエアコン1台8,000円（税込）。お掃除機能付きは+5,000円（税込）。完全分解洗浄・室外機洗浄・ドレンホース清掃・防カビコーティングのオプションあり。除菌・カビ防止コーティング標準付き、1台約1時間。"}, "price": "8000", "priceCurrency": "JPY"},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "ソファクリーニング", "description": "布・本革・合皮対応。ドイツ製専用洗剤とリンサーでダニ・ホコリ・ニオイ・ペットの汚れを除去。10,000円（税別）から。"}, "price": "10000", "priceCurrency": "JPY"},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "カーペットクリーニング", "description": "ポリッシャー洗浄とリンサーによる水洗い吸引で、繊維の奥の汚れを除去。6畳32,000円（税別）。15,000円（税別）から。"}, "price": "15000", "priceCurrency": "JPY"},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "空室ハウスクリーニング", "description": "マンション・一戸建ての空室・転居前後のまるごとクリーニング。水回りプロフェッショナルクリーニング フルセット付き。1R・1K 75,000円（税別）から。立会い不要も可。"}, "price": "75000", "priceCurrency": "JPY"},
-      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "水回りクリーニング", "description": "キッチン・レンジフード・浴室・トイレ・洗面台の水回り5点プレミアムセット80,000円（税別）。人気オプション7つ込み。"}, "price": "80000", "priceCurrency": "JPY"}
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "ソファクリーニング", "description": "布・本革・合皮対応。ドイツ製専用洗剤とリンサーでダニ・ホコリ・ニオイ・ペットの汚れを除去。11,000円（税込）から。"}, "price": "11000", "priceCurrency": "JPY"},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "カーペットクリーニング", "description": "ポリッシャー洗浄とリンサーによる水洗い吸引で、繊維の奥の汚れを除去。6畳35,200円（税込）。16,500円（税込）から。"}, "price": "16500", "priceCurrency": "JPY"},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "空室ハウスクリーニング", "description": "マンション・一戸建ての空室・転居前後のまるごとクリーニング。水回りプロフェッショナルクリーニング フルセット付き。1R・1K 82,500円（税込）から。立会い不要も可。"}, "price": "82500", "priceCurrency": "JPY"},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "水回りクリーニング", "description": "キッチン・レンジフード・浴室・トイレ・洗面台の水回り5点プレミアムセット88,000円（税込）。人気オプション7つ込み。"}, "price": "88000", "priceCurrency": "JPY"}
     ]
   }
 }
@@ -105,10 +105,6 @@
   <div class="toolbar">
     <div class="container">
       <nav class="chips" id="chips"></nav>
-      <div class="tax" role="group" aria-label="価格表示">
-        <button type="button" data-tax="ex" aria-pressed="true">税別</button>
-        <button type="button" data-tax="in" aria-pressed="false">税込</button>
-      </div>
     </div>
   </div>
 
@@ -135,7 +131,7 @@ const PRICES = [
   { id:"aircon", label:"エアコン", title:"エアコンクリーニング", desc:"完全分解洗浄・除菌カビ防止コーティング標準付き。1台約1時間。", cards:[
     { title:"基本料金", rows:[
       { n:"壁掛けエアコン 1台", p:8000, inc:true, hl:true },
-      { n:"12月限定キャンペーン：壁掛け 1台", p:6000, inc:true, fixed:true, until:"2026-12-31", note:"お掃除機能付きは10,000円／オプション3点セット7,000円" },
+      { n:"12月限定キャンペーン：壁掛け 1台", p:6000, inc:true, until:"2026-12-31", note:"お掃除機能付きは10,000円／オプション3点セット7,000円" },
     ]},
     { title:"オプション（1台あたり）", rows:[
       { n:"お掃除機能付きエアコン", p:5000, inc:true, plus:true },
@@ -167,11 +163,11 @@ const PRICES = [
       { n:"トイレ", p:12000, note:"約1時間" }, { n:"洗面台", p:12000, note:"約1時間" },
     ]},
     { title:"お部屋・外まわり", rows:[
-      { n:"窓サッシ・ベランダ", p:5000, from:true, note:"合計20,000円（税別）から承ります" },
-      { n:"床クリーニング（10㎡あたり）", p:10000, note:"合計20,000円（税別）から承ります" },
+      { n:"窓サッシ・ベランダ", p:5000, from:true, note:"合計22,000円（税込）から承ります" },
+      { n:"床クリーニング（10㎡あたり）", p:10000, note:"合計22,000円（税込）から承ります" },
     ]},
   ]},
-  { id:"carpet", label:"カーペット", title:"カーペット・ソファ", desc:"ドイツ製専用洗剤とリンサーでダニ・ホコリ・ニオイ・ペット汚れを除去。合計20,000円（税別）から承ります。", cards:[
+  { id:"carpet", label:"カーペット", title:"カーペット・ソファ", desc:"ドイツ製専用洗剤とリンサーでダニ・ホコリ・ニオイ・ペット汚れを除去。合計22,000円（税込）から承ります。", cards:[
     { title:"基本料金", rows:[
       { n:"カーペットクリーニング", p:15000, from:true },
       { n:"ソファークリーニング", p:10000, from:true },
@@ -214,14 +210,11 @@ const PRICES = [
   ]},
 ];
 
-let taxIn = false;
 const yen = n => n.toLocaleString() + "円";
 function priceHtml(r){
   if (r.text) return `<span class="pv${r.free ? " free" : ""}">${r.text}</span>`;
-  if (r.fixed) return `<span class="pv">${yen(r.p)}<small>税込</small></span>`;
-  const ex = r.inc ? Math.round(r.p / 1.1) : r.p, inc = r.inc ? r.p : Math.round(r.p * 1.1);
-  const v = taxIn ? inc : ex;
-  return `<span class="pv">${r.plus ? "+" : ""}${yen(v)}${r.from ? "〜" : ""}${r.unit || ""}<small>${taxIn ? "税込" : "税別"}</small></span>`;
+  const v = r.inc ? r.p : Math.round(r.p * 1.1);
+  return `<span class="pv">${r.plus ? "+" : ""}${yen(v)}${r.from ? "〜" : ""}${r.unit || ""}<small>税込</small></span>`;
 }
 function render(){
   const today = new Date().toISOString().slice(0, 10);
@@ -235,15 +228,10 @@ function render(){
       </div>
     </section>`).join("") + `
     <section class="pblock">
-      <div class="callout"><strong>追加料金について：</strong>部品を外して内部を確認した際、極めて重い堆積汚れ・カビ・油汚れがあり除去に大幅な工数がかかる場合のみ、「強化清掃」（1部門5,000〜10,000円・税別）を作業前にご相談します。ご了承なく追加することはありません。<br><strong>駐車場：</strong>敷地内に駐車できない場合はコインパーキングの実費をご負担ください。<br><strong>お支払い：</strong>現金・クレジットカード（作業終了後に現地で）。</div>
+      <div class="callout"><strong>追加料金について：</strong>部品を外して内部を確認した際、極めて重い堆積汚れ・カビ・油汚れがあり除去に大幅な工数がかかる場合のみ、「強化清掃」（1部門5,500〜11,000円・税込）を作業前にご相談します。ご了承なく追加することはありません。<br><strong>駐車場：</strong>敷地内に駐車できない場合はコインパーキングの実費をご負担ください。<br><strong>お支払い：</strong>現金・クレジットカード（作業終了後に現地で）。</div>
     </section>`;
   document.getElementById("chips").innerHTML = PRICES.map(b => `<a href="#${b.id}">${b.label}</a>`).join("");
 }
-document.querySelectorAll(".tax button").forEach(b => b.onclick = () => {
-  taxIn = b.dataset.tax === "in";
-  document.querySelectorAll(".tax button").forEach(x => x.setAttribute("aria-pressed", x === b));
-  render();
-});
 render();
 // 表示中のセクションのチップを強調
 const io = new IntersectionObserver(es => es.forEach(e => {
